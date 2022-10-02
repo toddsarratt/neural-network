@@ -14,7 +14,8 @@ object MatrixMath {
             }
         }
 
-        if (xOuter.length != yOuter.length) throw new IllegalArgumentException("Weights and inputs lengths differ")
+        if (xOuter.length != yOuter.length)
+            throw new IllegalArgumentException("Vectors must be the same length to compute dot product")
         else dotProductWithAcc(xOuter, yOuter, Nil)
     }
 }
