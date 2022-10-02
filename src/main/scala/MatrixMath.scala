@@ -1,8 +1,11 @@
 import scala.annotation.tailrec
 
-object DotProduct {
+/**
+ * Is it all just linear algebra?
+ */
+object MatrixMath {
 
-    def compute(xOuter: List[Double], yOuter: List[Double]): List[Double] = {
+    def dotProduct(xOuter: List[Double], yOuter: List[Double]): List[Double] = {
         @tailrec
         def dotProductWithAcc(xInner: List[Double], yInner: List[Double], acc: List[Double]): List[Double] = {
             (xInner, yInner) match {

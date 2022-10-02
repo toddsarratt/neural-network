@@ -1,11 +1,11 @@
-import DotProduct.compute
+import MatrixMath.dotProduct
 
 class Neuron {
     var weights: List[Double] = Nil
     var bias: Double = 0.0
 
     def calculate(inputs: List[Double]): Double = {
-        compute(inputs, weights).sum + bias
+        dotProduct(inputs, weights).sum + bias
     }
 }
 
