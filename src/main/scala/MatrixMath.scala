@@ -9,7 +9,7 @@ object MatrixMath {
         @tailrec
         def dotProductWithAcc(xInner: List[Double], yInner: List[Double], acc: List[Double]): List[Double] = {
             (xInner, yInner) match {
-                case (Nil, Nil) => acc
+                case (_, Nil) | (Nil, _) => acc
                 case (x :: xs, y :: ys) => dotProductWithAcc(xs, ys, acc :+ (x * y))
             }
         }
@@ -18,25 +18,38 @@ object MatrixMath {
             throw new IllegalArgumentException("Vectors must be the same length to compute dot product")
         else dotProductWithAcc(xOuter, yOuter, Nil)
     }
-//
-//    def matrixProduct(xOuter: List[List[Double]], yOuter: List[List[Double]]): List[List[Double]] = {
-//        // Holy shit
-//    }
 
-    def transpose(x: List[List[Double]]): List[List[Double]] = {
-        verifyMatrix(x)
+    def matrixProduct(xOuter: List[List[Double]], yOuter: List[List[Double]]): List[List[Double]] = {
+
         @tailrec
-        def transposeWithAcc(xInner: List[List[Double]], yInner: List[List[Double]], index: Int) : List[List[Double]] = {
+        def matrixProductWithAcc(xInner: List[List[Double]], yInner: List[List[Double]], acc: List[List[Double]]): List[List[Double]] = {
+            (xInner, yInner) match {
+                case (Nil, _) => acc
+                case (_, _) =>
+                    val newRow =
+                        for (yRow <- yInner)
+                            yield dotProduct(xInner.head, yRow).sum
+                    matrixProductWithAcc(xInner.tail, yInner, acc :+ newRow)
+            }
+        }
+        verifyMatrix(xOuter)
+        matrixProductWithAcc(xOuter, transpose(yOuter), Nil)
+    }
+
+    def transpose(y: List[List[Double]]): List[List[Double]] = {
+        verifyMatrix(y)
+        @tailrec
+        def transposeWithAcc(xInner: List[List[Double]], acc: List[List[Double]], index: Int) : List[List[Double]] = {
             index match {
-                case upperBound if upperBound >= xInner.head.length => yInner
+                case upperBound if upperBound >= xInner.head.length => acc
                 case _ =>
                     val yRow =
                         for (xRow <- xInner)
                             yield xRow(index)
-                transposeWithAcc(xInner, yInner :+ yRow, index + 1)
+                transposeWithAcc(xInner, acc :+ yRow, index + 1)
             }
         }
-        transposeWithAcc(x, Nil, 0)
+        transposeWithAcc(y, Nil, 0)
     }
 
     def verifyMatrix(matrix: List[List[Double]]): Unit = {
