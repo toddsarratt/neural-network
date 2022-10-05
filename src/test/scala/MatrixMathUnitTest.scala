@@ -43,5 +43,11 @@ class MatrixMathUnitTest extends AnyFunSuite {
         val testResultMatrix = MatrixMath.matrixProduct(firstMatrix, secondMatrix)
         assert(testResultMatrix == expectedMatrixProduct)
     }
-  */
+
+    def compareAndAssertMatrixApproximation(testMatrix: List[List[Double]], expectedMatrix: List[List[Double]]): Unit = {
+        for (testRow <- testMatrix)
+            for (expectedRow <- expectedMatrix)
+                testRow.zip(expectedRow).foreach((a, b) -> assertThat(a.equals(b, +- 0.5)))
+    }
+    */
 }

@@ -5,22 +5,20 @@ import scala.annotation.tailrec
  */
 object MatrixMath {
 
-    def dotProduct(xOuter: List[Double], yOuter: List[Double]): List[Double] = {
+    def dotProduct(xOuter: List[Double], yOuter: List[Double]): Double = {
         @tailrec
-        def dotProductWithAcc(xInner: List[Double], yInner: List[Double], acc: List[Double]): List[Double] = {
+        def dotProductWithAcc(xInner: List[Double], yInner: List[Double], acc: List[Double]): Double = {
             (xInner, yInner) match {
-                case (_, Nil) | (Nil, _) => acc
+                case (_, Nil) | (Nil, _) => acc.sum
                 case (x :: xs, y :: ys) => dotProductWithAcc(xs, ys, acc :+ (x * y))
             }
         }
-
         if (xOuter.length != yOuter.length)
             throw new IllegalArgumentException("Vectors must be the same length to compute dot product")
         else dotProductWithAcc(xOuter, yOuter, Nil)
     }
 
     def matrixProduct(xOuter: List[List[Double]], yOuter: List[List[Double]]): List[List[Double]] = {
-
         @tailrec
         def matrixProductWithAcc(xInner: List[List[Double]], yInner: List[List[Double]], acc: List[List[Double]]): List[List[Double]] = {
             (xInner, yInner) match {
@@ -28,7 +26,7 @@ object MatrixMath {
                 case (_, _) =>
                     val newRow =
                         for (yRow <- yInner)
-                            yield dotProduct(xInner.head, yRow).sum
+                            yield dotProduct(xInner.head, yRow)
                     matrixProductWithAcc(xInner.tail, yInner, acc :+ newRow)
             }
         }

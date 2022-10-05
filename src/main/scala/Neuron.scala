@@ -5,7 +5,7 @@ class Neuron {
     var bias: Double = 0.0
 
     def calculate(inputs: List[Double]): Double = {
-        dotProduct(inputs, weights).sum + bias
+        dotProduct(inputs, weights) + bias
     }
 }
 
