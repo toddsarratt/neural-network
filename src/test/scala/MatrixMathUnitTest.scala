@@ -1,6 +1,7 @@
 import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.should.Matchers
 
-class MatrixMathUnitTest extends AnyFunSuite {
+class MatrixMathUnitTest extends AnyFunSuite with Matchers {
     test("Matrix transpose happy path") {
         val testMatrix = List(
             List(1.0, 4.0, 7.0),
@@ -17,8 +18,6 @@ class MatrixMathUnitTest extends AnyFunSuite {
         assert(testResults == expectedMatrix)
     }
 
-    /*
-    Doubles make for lousy unit testing. Uncomment when needed.
     test("Matrix product happy path") {
         val firstMatrix = List(
             List(.49, .97, .53, .05),
@@ -41,13 +40,16 @@ class MatrixMathUnitTest extends AnyFunSuite {
             List(1.20, .65, .89, 1.26, .5)
         )
         val testResultMatrix = MatrixMath.matrixProduct(firstMatrix, secondMatrix)
-        assert(testResultMatrix == expectedMatrixProduct)
+        compareAndAssertMatrixApproximation(testResultMatrix, expectedMatrixProduct)
     }
 
     def compareAndAssertMatrixApproximation(testMatrix: List[List[Double]], expectedMatrix: List[List[Double]]): Unit = {
-        for (testRow <- testMatrix)
-            for (expectedRow <- expectedMatrix)
-                testRow.zip(expectedRow).foreach((a, b) -> assertThat(a.equals(b, +- 0.5)))
+        testMatrix.zip(expectedMatrix).foreach {
+            case (testRow, expectedRow) =>
+                testRow.zip(expectedRow).foreach {
+                    case (testResult, expectedResult) =>
+                        testResult should equal(expectedResult +- 0.005)
+                }
+        }
     }
-    */
 }
