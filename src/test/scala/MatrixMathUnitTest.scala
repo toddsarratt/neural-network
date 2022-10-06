@@ -1,3 +1,4 @@
+import MatrixMath.transpose
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -39,7 +40,7 @@ class MatrixMathUnitTest extends AnyFunSuite with Matchers {
             List(1.27, .70, .99, 1.5, .81),
             List(1.20, .65, .89, 1.26, .5)
         )
-        val testResultMatrix = MatrixMath.matrixProduct(firstMatrix, secondMatrix)
+        val testResultMatrix = MatrixMath.matrixProduct(firstMatrix, transpose(secondMatrix))
         compareAndAssertMatrixApproximation(testResultMatrix, expectedMatrixProduct)
     }
 
