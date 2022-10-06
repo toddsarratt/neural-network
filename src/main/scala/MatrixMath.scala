@@ -31,7 +31,8 @@ object MatrixMath {
             }
         }
         verifyMatrix(xOuter)
-        matrixProductWithAcc(xOuter, transpose(yOuter), Nil)
+        verifyMatrix(yOuter)
+        matrixProductWithAcc(xOuter, yOuter, Nil)
     }
 
     def transpose(y: List[List[Double]]): List[List[Double]] = {
