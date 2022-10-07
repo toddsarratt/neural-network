@@ -1,10 +1,10 @@
-import MatrixMath.{dotProduct, matrixProduct, transpose}
+import MatrixMath.{matrixProduct, transpose}
 
 class Layer {
     var weights: Matrix = Matrix.apply(Nil)
     var biases: List[Double] = Nil
 
-    def neuronCalculations(inputs: Matrix): Matrix = {
+    val calculate: Matrix => Matrix = (inputs: Matrix) => {
         matrixProduct(inputs, transpose(weights)) plus biases
     }
 
