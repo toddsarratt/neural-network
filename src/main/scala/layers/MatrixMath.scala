@@ -1,3 +1,5 @@
+package layers
+
 import scala.annotation.tailrec
 
 /**
@@ -13,6 +15,7 @@ object MatrixMath {
                 case (x :: xs, y :: ys) => dotProductWithAcc(xs, ys, acc :+ (x * y))
             }
         }
+
         if (xOuter.length != yOuter.length)
             throw new IllegalArgumentException("Vectors must be the same length to compute dot product")
         else dotProductWithAcc(xOuter, yOuter, Nil)
@@ -30,6 +33,7 @@ object MatrixMath {
                     matrixProductWithAcc(xInner.tail, yInner, acc :+ newRow)
             }
         }
+
         verifyMatrix(xOuter)
         verifyMatrix(yOuter)
         // Fuck vector columns. We'll transpose back if we have to
@@ -39,7 +43,7 @@ object MatrixMath {
     def vectorAddition(matrix: Matrix, vector: List[Double]): Matrix = {
         verifyMatrix(matrix)
         if (matrix.value.head.length != vector.length)
-            throw new IllegalArgumentException("Matrix and vector must have same width")
+            throw new IllegalArgumentException("layers.Matrix and vector must have same width")
         val resultingMatrix = for (row <- matrix.value)
             yield {
                 row.zip(vector).map {
@@ -52,17 +56,19 @@ object MatrixMath {
 
     def transpose(y: Matrix): Matrix = {
         verifyMatrix(y)
+
         @tailrec
-        def transposeWithAcc(xInner: List[List[Double]], acc: List[List[Double]], index: Int) : Matrix = {
+        def transposeWithAcc(xInner: List[List[Double]], acc: List[List[Double]], index: Int): Matrix = {
             index match {
                 case upperBound if upperBound >= xInner.head.length => Matrix.apply(acc)
                 case _ =>
                     val yRow =
                         for (xRow <- xInner)
                             yield xRow(index)
-                transposeWithAcc(xInner, acc :+ yRow, index + 1)
+                    transposeWithAcc(xInner, acc :+ yRow, index + 1)
             }
         }
+
         transposeWithAcc(y.value, Nil, 0)
     }
 
@@ -71,8 +77,8 @@ object MatrixMath {
             case Nil => throw new IllegalArgumentException("Cannot have NIL matrix")
             case internalLists =>
                 val secondDimension = internalLists.head.length
-                if(internalLists.exists(row => row.length != secondDimension)) {
-                    throw new IllegalArgumentException("Matrix must be homogenous")
+                if (internalLists.exists(row => row.length != secondDimension)) {
+                    throw new IllegalArgumentException("layers.Matrix must be homogenous")
                 }
         }
     }

@@ -1,4 +1,6 @@
-import MatrixMath.dotProduct
+package layers
+
+import layers.MatrixMath.dotProduct
 
 class Neuron {
     var weights: List[Double] = Nil

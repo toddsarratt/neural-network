@@ -1,4 +1,6 @@
-import MatrixMath.vectorAddition
+package layers
+
+import layers.MatrixMath.vectorAddition
 
 class Matrix {
     var value: List[List[Double]] = Nil

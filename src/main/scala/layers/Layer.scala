@@ -1,4 +1,6 @@
-import MatrixMath.{matrixProduct, transpose}
+package layers
+
+import layers.MatrixMath.{matrixProduct, transpose}
 
 class Layer {
     var weights: Matrix = Matrix.apply(Nil)
@@ -8,7 +10,7 @@ class Layer {
         matrixProduct(inputs, transpose(weights)) plus biases
     }
 
-    override def toString = s"Layer($weights, $biases)"
+    override def toString = s"layers.Layer($weights, $biases)"
 }
 
 object Layer {
