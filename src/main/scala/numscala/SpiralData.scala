@@ -3,8 +3,7 @@ package numscala
 import layers.Matrix
 import numscala.Numscala.linspace
 
-import scala.annotation.tailrec
-import scala.math.{Pi, cos, sin}
+import scala.math.{cos, sin}
 import scala.util.Random.nextGaussian
 
 /**
@@ -18,33 +17,31 @@ object SpiralData {
     val N = 100 // number of points per class
     val D = 2 // dimensionality
     val K = 3 // number of classes
-    val r: List[Double] = linspace(0.0, 1, N) // radius
+    val radii: List[Double] = linspace(0.0, 1, N)
 
     def calculateDataMatrix(): Matrix = {
-        for (j <- Range(0, K)) yield {
+        val threeLists = for (j <- Range(0, K)) yield {
             val s = linspace(j * 4, (j + 1) * 4, N).zip(List.fill(N)(nextGaussian()).map(_ * 0.2))
             val t = for ((x, y) <- s)
                 yield x + y
-            // r is a LIST OF DOUBLES might be the issue
-            val newPoints = t.map(a => sin(a) * r).zip(t.map(a => cos(a) * r))
-            return Matrix.apply(newPoints)
+            // radii is a LIST OF DOUBLES might be the issue
+            val newXValues = zipWith(t, radii, sin(_) * _)
+            val newYValues = zipWith(t, radii, cos(_) * _)
+                for ((x, y) <- newXValues.zip(newYValues))
+                    yield List(x, y)
+        }
+        Matrix.apply(threeLists.fold(Nil)((x, y) => x ++ y))
+    }
+
+    def zipWith(a: List[Double], b: List[Double], function: (Double, Double) => Double) : List[Double] = {
+        (a, b) match {
+            case (Nil, _) | (_, Nil) => Nil
+            case (x :: xs, y :: ys) => function(x, y) :: zipWith(xs, ys, function)
         }
     }
 
-    def tuple2ToListDouble(tuples: List[(Double, Double)]): List[List[Double]] = {
-        @tailrec
-        def toList(tuples: List[(Double, Double)], acc: List[List[Double]]): List[List[Double]] = {
-            tuples match {
-                case Nil => acc
-                case _ =>
-                    val row = List(tuples.head._1, tuples.head._2)
-                    toList(tuples.tail, acc :+ row)
-            }
-        }
-
-        tuples match {
-            case Nil => Nil
-            case _ => toList(tuples, Nil)
-        }
+    def main(args: Array[String]): Unit = {
+        val answer = calculateDataMatrix()
+        println(answer.value.size)
     }
 }
