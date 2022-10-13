@@ -43,7 +43,7 @@ object MatrixMath {
     def vectorAddition(matrix: Matrix, vector: List[Double]): Matrix = {
         verifyMatrix(matrix)
         if (matrix.value.head.length != vector.length)
-            throw new IllegalArgumentException("layers.Matrix and vector must have same width")
+            throw new IllegalArgumentException("Matrix and vector must have same width")
         val resultingMatrix = for (row <- matrix.value)
             yield {
                 row.zip(vector).map {
@@ -78,7 +78,7 @@ object MatrixMath {
             case internalLists =>
                 val secondDimension = internalLists.head.length
                 if (internalLists.exists(row => row.length != secondDimension)) {
-                    throw new IllegalArgumentException("layers.Matrix must be homogenous")
+                    throw new IllegalArgumentException("Matrix must be homogenous")
                 }
         }
     }

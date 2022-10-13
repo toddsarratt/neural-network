@@ -10,7 +10,7 @@ class Layer {
         matrixProduct(inputs, transpose(weights)) plus biases
     }
 
-    override def toString = s"layers.Layer($weights, $biases)"
+    override def toString = s"Layer($weights, $biases)"
 }
 
 object Layer {

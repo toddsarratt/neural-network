@@ -5,7 +5,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 class MatrixMathUnitTest extends AnyFunSuite with Matchers {
-    test("layers.Matrix transpose happy path") {
+    test("Matrix transpose happy path") {
         val testMatrix = Matrix.apply(
             List(
                 List(1.0, 4.0, 7.0),
@@ -25,7 +25,7 @@ class MatrixMathUnitTest extends AnyFunSuite with Matchers {
         compareAndAssertMatrixApproximation(testResults, expectedMatrix)
     }
 
-    test("layers.Matrix product happy path") {
+    test("Matrix product happy path") {
         val firstMatrix = Matrix.apply(
             List(
                 List(.49, .97, .53, .05),

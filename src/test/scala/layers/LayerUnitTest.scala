@@ -41,7 +41,7 @@ class LayerUnitTest extends AnyFunSuite with Matchers {
                 List(-0.99314, 1.41254, -0.35655)
             )
         )
-    test("layers.Layer calculation happy path") {
+    test("Layer calculation happy path") {
         val testLayer = Layer.apply(weights, biases)
         val testCalculation = testLayer.calculate(inputs)
         compareAndAssertMatrixApproximation(testCalculation, layer1Outputs)
