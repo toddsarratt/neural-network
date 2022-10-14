@@ -1,4 +1,6 @@
-import MatrixMath.{matrixProduct, transpose}
+package layers
+
+import layers.MatrixMath.{matrixProduct, transpose}
 
 class Layer {
     var weights: Matrix = Matrix.apply(Nil)

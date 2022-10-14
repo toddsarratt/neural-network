@@ -1,4 +1,6 @@
-import MatrixMath.transpose
+package layers
+
+import layers.MatrixMath.transpose
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 

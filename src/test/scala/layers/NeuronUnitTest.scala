@@ -1,3 +1,5 @@
+package layers
+
 import org.scalatest.funsuite._
 
 class NeuronUnitTest extends AnyFunSuite {
