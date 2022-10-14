@@ -8,29 +8,27 @@ import scala.util.Random.nextGaussian
 
 /**
  * From https://cs231n.github.io/neural-networks-case-study/
- *
- * X[ix] = np.c_[r*np.sin(t), r*np.cos(t)]
- * y[ix] = j
+ * Generates coordinates which, when plotted, would resemble a spiral
+ * Something about non-linear data for training
  */
 object SpiralData {
 
-    val N = 100 // number of points per class
-    val D = 2 // dimensionality
-    val K = 3 // number of classes
-    val radii: List[Double] = linspace(0.0, 1, N)
+    val POINTS_PER_CLASS = 100
+    val CLASSES = 3
+    val radii: List[Double] = linspace(0.0, 1, POINTS_PER_CLASS)
 
     def calculateDataMatrix(): Matrix = {
-        val threeLists = for (j <- Range(0, K)) yield {
-            val s = linspace(j * 4, (j + 1) * 4, N).zip(List.fill(N)(nextGaussian()).map(_ * 0.2))
-            val t = for ((x, y) <- s)
+        val oneListPerClass = for (classIndex <- Range(0, CLASSES)) yield {
+            val randomXsAndYs = linspace(classIndex * 4, (classIndex + 1) * 4, POINTS_PER_CLASS)
+                .zip(List.fill(POINTS_PER_CLASS)(nextGaussian()).map(_ * 0.2))
+            val theta = for ((x, y) <- randomXsAndYs)
                 yield x + y
-            // radii is a LIST OF DOUBLES might be the issue
-            val newXValues = zipWith(t, radii, sin(_) * _)
-            val newYValues = zipWith(t, radii, cos(_) * _)
+            val newXValues = zipWith(theta, radii, sin(_) * _)
+            val newYValues = zipWith(theta, radii, cos(_) * _)
                 for ((x, y) <- newXValues.zip(newYValues))
                     yield List(x, y)
         }
-        Matrix.apply(threeLists.fold(Nil)((x, y) => x ++ y))
+        Matrix.apply(oneListPerClass.fold(Nil)((x, y) => x ++ y))
     }
 
     def zipWith(a: List[Double], b: List[Double], function: (Double, Double) => Double) : List[Double] = {
