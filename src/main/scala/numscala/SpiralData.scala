@@ -37,9 +37,4 @@ object SpiralData {
             case (x :: xs, y :: ys) => function(x, y) :: zipWith(xs, ys, function)
         }
     }
-
-    def main(args: Array[String]): Unit = {
-        val answer = calculateDataMatrix()
-        println(answer.value.size)
-    }
 }
