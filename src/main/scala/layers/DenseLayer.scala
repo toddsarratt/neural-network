@@ -1,7 +1,6 @@
 package layers
 
 import layers.MatrixMath.matrixProduct
-import numscala.SpiralData
 
 import scala.util.Random.nextGaussian
 
@@ -34,12 +33,5 @@ object DenseLayer {
 
     def generateBiases(numberOfNerons: Int): List[Double] = {
         List.fill(numberOfNerons)(0)
-    }
-
-    def main(args: Array[String]): Unit = {
-        val sampleData = SpiralData.calculateDataMatrix()
-        val dense1 = DenseLayer.apply(2, 3)
-        val forwardValues = dense1.forward(sampleData)
-        println(forwardValues)
     }
 }
