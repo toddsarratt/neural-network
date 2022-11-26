@@ -26,7 +26,7 @@ object DenseLayer {
     }
 
     def generateWeights(numberOfInputs: Int, numberOfNeurons: Int): Matrix = {
-        val weights = for (i <- (0 until numberOfInputs).toList)
+        val weights = for (_ <- (0 until numberOfInputs).toList)
             yield List.fill(numberOfNeurons)(nextGaussian()).map(_ * magnitude)
         Matrix.apply(weights)
     }
