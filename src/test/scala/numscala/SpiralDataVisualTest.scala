@@ -6,7 +6,7 @@ object SpiralDataVisualTest {
 
     // Visual Test
     def main(args: Array[String]): Unit = {
-        val answer = calculateDataMatrix()
+        val (answer, _) = calculateDataMatrix()
         println(answer.value.size)
     }
 }

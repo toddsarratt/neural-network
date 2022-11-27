@@ -17,7 +17,7 @@ class SoftmaxUnitTest extends AnyFunSuite with Matchers {
     }
 
     test("Spiral Data with Softmax rows each sum to 1") {
-        val testSpiralData = SpiralData.calculateDataMatrix()
+        val (testSpiralData, _) = SpiralData.calculateDataMatrix()
         val dense1 = DenseLayer.apply(2, 3)
         val dense2 = DenseLayer.apply(3, 3)
         val dense1Forward = dense1.forward(testSpiralData)
