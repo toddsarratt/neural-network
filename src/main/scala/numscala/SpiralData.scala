@@ -18,6 +18,9 @@ object SpiralData {
     val CLASSES = 3
     val radii: List[Double] = linspace(0.0, 1, POINTS_PER_CLASS)
 
+    // Returns a tuple. First element is a matrix of spiral data.
+    // Second element is a List where each value at an index in the list is the class label for the
+    // matrix row at the same index
     def calculateDataMatrix(): (Matrix, List[Int]) = {
         val classLabels = new ListBuffer[Int]()
         val oneListPerClass = for (classIndex <- Range(0, CLASSES)) yield {
@@ -34,7 +37,8 @@ object SpiralData {
         (Matrix.apply(oneListPerClass.fold(Nil)((x, y) => x ++ y)), classLabels.toList)
     }
 
-    def zipWith(a: List[Double], b: List[Double], function: (Double, Double) => Double) : List[Double] = {
+    // How does Scala not have zipWith function?
+    def zipWith(a: List[Double], b: List[Double], function: (Double, Double) => Double): List[Double] = {
         (a, b) match {
             case (Nil, _) | (_, Nil) => Nil
             case (x :: xs, y :: ys) => function(x, y) :: zipWith(xs, ys, function)

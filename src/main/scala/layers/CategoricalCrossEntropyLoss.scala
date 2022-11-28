@@ -24,8 +24,10 @@ object CategoricalCrossEntropyLoss {
         // Mask values - only for one-hot encoded labels
         val correctConfidences =
             for ((outputRow, classTargetRow) <- yTrue.value.zip(yPredClipped.value))
-                yield (for ((outputValue, classTargetValue) <- outputRow.zip(classTargetRow))
-                    yield outputValue * classTargetValue).sum
+                yield
+                    (for ((outputValue, classTargetValue) <- outputRow.zip(classTargetRow))
+                        yield outputValue * classTargetValue)
+                    .sum
         val negLog = correctConfidences.map(-Math.log(_))
         negLog.sum / negLog.size
     }
