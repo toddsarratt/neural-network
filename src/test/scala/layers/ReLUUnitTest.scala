@@ -12,7 +12,7 @@ class ReLUUnitTest extends AnyFunSuite {
     }
 
     test("Visual inspection of ReLU function") {
-        val sampleData = SpiralData.calculateDataMatrix()
+        val (sampleData, _) = SpiralData.calculateDataMatrix()
         val dense1 = DenseLayer.apply(2, 3)
         val forwardPassThruLayer = dense1.forward(sampleData)
         val forwardPassThruActivationFunction = ReLU.forward(forwardPassThruLayer)
