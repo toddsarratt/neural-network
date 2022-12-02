@@ -29,4 +29,9 @@ object Numscala {
             }
         )
     }
+
+    // Finds max element in a list and returns its index
+    def argmax(xs: List[Double]): Int = {
+        xs.zipWithIndex.maxBy(_._1)._2
+    }
 }
