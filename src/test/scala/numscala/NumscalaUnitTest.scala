@@ -34,4 +34,10 @@ class NumscalaUnitTest extends AnyFunSuite with Matchers {
             }
         }
     }
+
+    test("argmax happy path") {
+        assert(Numscala.argmax(List(0.0, 0.5, 1.0)) == 2)
+        assert(Numscala.argmax(List(0.0, 1.0, 0.0)) == 1)
+        assert(Numscala.argmax(List(1.0, 0.5, 0.0)) == 0)
+    }
 }
