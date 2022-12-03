@@ -33,7 +33,11 @@ class CategoricalCrossEntropyLossUnitTest extends AnyFunSuite {
         val secondPass = dense2.forward(firstActivation)
         val secondActivation = Softmax.forward(secondPass)
         println(secondActivation)
-        val loss = CategoricalCrossEntropyLoss.forward(secondActivation, classLabels)
-        loss should equal (1.09861 +- 0.00001)
+        val expectedLoss = 1.09861
+        val testLoss = CategoricalCrossEntropyLoss.forward(secondActivation, classLabels)
+        testLoss should equal (expectedLoss +- 0.00001)
+        val expectedAccuracy = 2.0/3.0
+        val testAccuracy = Accuracy.calculate(secondActivation, classLabels)
+        testAccuracy should equal (expectedAccuracy +- 0.00001)
     }
 }
