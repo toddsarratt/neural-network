@@ -1,9 +1,9 @@
 package layers
 
-import numscala.SpiralData
 import org.scalactic.Tolerance.convertNumericToPlusOrMinusWrapper
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers.{convertToAnyShouldWrapper, equal}
+import testsets.SpiralData
 
 class CategoricalCrossEntropyLossUnitTest extends AnyFunSuite {
     test("CategoricalCrossEntropyLoss happy path") {

@@ -1,9 +1,8 @@
-package numscala
+package testsets
 
 import layers.Matrix
 import numscala.Numscala.linspace
 
-import scala.collection.mutable.ListBuffer
 import scala.math.{cos, sin}
 import scala.util.Random.nextGaussian
 
@@ -19,21 +18,20 @@ object SpiralData {
     val radii: List[Double] = linspace(0.0, 1, POINTS_PER_CLASS)
 
     // Returns a tuple. First element is a matrix of spiral data.
-    // Second element is a List where each value at an index in the list is the class label for the
+    // Second element is a List where each value in the list is the class label for the
     // matrix row at the same index
     def calculateDataMatrix(): (Matrix, List[Int]) = {
-        val classLabels = new ListBuffer[Int]()
-        val oneListPerClass = for (classIndex <- Range(0, CLASSES)) yield {
-            classLabels += classIndex
-            val randomXsAndYs = linspace(classIndex * 4, (classIndex + 1) * 4, POINTS_PER_CLASS)
-                .zip(List.fill(POINTS_PER_CLASS)(nextGaussian()).map(_ * 0.2))
-            val theta = for ((x, y) <- randomXsAndYs)
-                yield x + y
-            val newXValues = zipWith(theta, radii, sin(_) * _)
-            val newYValues = zipWith(theta, radii, cos(_) * _)
-            for ((x, y) <- newXValues.zip(newYValues))
-                yield List(x, y)
-        }
+        val classLabels = 0 until CLASSES
+        val oneListPerClass = classLabels.collect { classIndex =>
+                val randomXsAndYs = linspace(classIndex * 4, (classIndex + 1) * 4, POINTS_PER_CLASS)
+                    .zip(List.fill(POINTS_PER_CLASS)(nextGaussian()).map(_ * 0.2))
+                val theta = for ((x, y) <- randomXsAndYs)
+                    yield x + y
+                val newXValues = zipWith(theta, radii, sin(_) * _)
+                val newYValues = zipWith(theta, radii, cos(_) * _)
+                for ((x, y) <- newXValues.zip(newYValues))
+                    yield List(x, y)
+            }
         (Matrix.apply(oneListPerClass.fold(Nil)((x, y) => x ++ y)), classLabels.toList)
     }
 

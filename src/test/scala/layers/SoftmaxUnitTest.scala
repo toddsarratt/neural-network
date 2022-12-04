@@ -1,8 +1,8 @@
 package layers
 
-import numscala.SpiralData
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
+import testsets.SpiralData
 
 class SoftmaxUnitTest extends AnyFunSuite with Matchers {
     test("Verify Softmax function rows each sum to 1") {
