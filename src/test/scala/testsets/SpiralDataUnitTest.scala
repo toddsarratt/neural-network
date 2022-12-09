@@ -7,7 +7,7 @@ class SpiralDataUnitTest extends AnyFunSuite {
    test ("Verify spiral data size") {
        val (spiralData, labels) = calculateDataMatrix()
        assert(spiralData.value.size == 300)
-       assert(labels.size == 3)
+       assert(labels.size == 300)
        println((spiralData, labels))
    }
 }

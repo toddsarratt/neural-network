@@ -24,7 +24,6 @@ object SpiralData {
     def calculateDataMatrix(): (Matrix, List[Int]) = {
         val classLabels = new ListBuffer[Int]()
         val oneListPerClass = for (classIndex <- Range(0, CLASSES)) yield {
-            classLabels += classIndex
             val randomXsAndYs = linspace(classIndex * 4, (classIndex + 1) * 4, POINTS_PER_CLASS)
                 .zip(List.fill(POINTS_PER_CLASS)(nextGaussian()).map(_ * 0.2))
             val theta = for ((x, y) <- randomXsAndYs)
@@ -32,7 +31,10 @@ object SpiralData {
             val newXValues = zipWith(theta, radii, sin(_) * _)
             val newYValues = zipWith(theta, radii, cos(_) * _)
             for ((x, y) <- newXValues.zip(newYValues))
-                yield List(x, y)
+                yield {
+                    classLabels += classIndex
+                    List(x, y)
+                }
         }
         (Matrix.apply(oneListPerClass.fold(Nil)((x, y) => x ++ y)), classLabels.toList)
     }

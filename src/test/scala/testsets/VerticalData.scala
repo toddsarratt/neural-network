@@ -22,9 +22,9 @@ import scala.util.Random.nextGaussian
 //     return X, y
 
 // OpenAI says:
-// def createData(samples: Int, classes: Int): (Array[Array[Double]], Array[Int]) = {
-//    val X = Array.ofDim[Double](samples * classes, 2)
-//    val y = Array.ofDim[Int](samples * classes)
+// def createData(100: Int, 3: Int): (Array[Array[Double]], Array[Int]) = {
+//    val X = Array.ofDim[Double](100 * 3, 2)
+//    val y = Array.ofDim[Int](100 * 3)
 //    for (classNumber <- 0 until classes) {
 //      val ix = (samples * classNumber) until (samples * (classNumber + 1))
 //      X(ix) = Array.tabulate(samples)(i => (scala.util.Random.nextGaussian() * 0.1) + (classNumber) / 3)    <= Doesn't compile
