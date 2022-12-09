@@ -1,0 +1,5 @@
+package integrationtests
+
+class IntroducingOptimization {
+
+}
