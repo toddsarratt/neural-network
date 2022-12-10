@@ -2,6 +2,8 @@ package numscala
 
 import layers.Matrix
 
+import scala.util.Random.nextGaussian
+
 object Numscala {
 
     // Creates a List from a to b of length elements
@@ -33,5 +35,25 @@ object Numscala {
     // Finds max element in a list and returns its index
     def argmax(xs: List[Double]): Int = {
         xs.zipWithIndex.maxBy(_._1)._2
+    }
+
+    def randn(multiplier: Double, x: Int, y: Int): Matrix = {
+        Matrix.apply(
+            for (_ <- List.range(0, x)) yield
+                for (_ <- List.range(0, y)) yield
+                    multiplier * nextGaussian()
+        )
+    }
+
+    def randn(multiplier: Double, x: Int): List[Double] = {
+        for (_ <- List.range(0, x)) yield
+            multiplier * nextGaussian()
+    }
+
+    def zipWith(a: List[Double], b: List[Double], function: (Double, Double) => Double): List[Double] = {
+        (a, b) match {
+            case (Nil, _) | (_, Nil) => Nil
+            case (x :: xs, y :: ys) => function(x, y) :: zipWith(xs, ys, function)
+        }
     }
 }

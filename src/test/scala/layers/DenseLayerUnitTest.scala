@@ -1,6 +1,6 @@
 package layers
 
-import numscala.SpiralData
+import testsets.SpiralData
 
 class DenseLayerUnitTest {
 

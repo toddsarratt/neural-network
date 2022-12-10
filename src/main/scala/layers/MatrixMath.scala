@@ -9,16 +9,16 @@ object MatrixMath {
 
     def dotProduct(xOuter: List[Double], yOuter: List[Double]): Double = {
         @tailrec
-        def dotProductWithAcc(xInner: List[Double], yInner: List[Double], acc: List[Double]): Double = {
+        def dotProductWithAcc(xInner: List[Double], yInner: List[Double], acc: Double): Double = {
             (xInner, yInner) match {
-                case (_, Nil) | (Nil, _) => acc.sum
-                case (x :: xs, y :: ys) => dotProductWithAcc(xs, ys, acc :+ (x * y))
+                case (_, Nil) | (Nil, _) => acc
+                case (x :: xs, y :: ys) => dotProductWithAcc(xs, ys, acc + (x * y))
             }
         }
 
         if (xOuter.length != yOuter.length)
             throw new IllegalArgumentException("Vectors must be the same length to compute dot product")
-        else dotProductWithAcc(xOuter, yOuter, Nil)
+        else dotProductWithAcc(xOuter, yOuter, 0.0)
     }
 
     def matrixProduct(xOuter: Matrix, yOuter: Matrix): Matrix = {

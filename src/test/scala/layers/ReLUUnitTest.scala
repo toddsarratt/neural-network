@@ -1,7 +1,7 @@
 package layers
 
-import numscala.SpiralData
 import org.scalatest.funsuite.AnyFunSuite
+import testsets.SpiralData
 
 class ReLUUnitTest extends AnyFunSuite {
     test("Verify ReLU function") {

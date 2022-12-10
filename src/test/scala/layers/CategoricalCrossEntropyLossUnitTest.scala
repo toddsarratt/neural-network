@@ -1,9 +1,10 @@
 package layers
 
-import numscala.SpiralData
 import org.scalactic.Tolerance.convertNumericToPlusOrMinusWrapper
 import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.matchers.must.Matchers.be
 import org.scalatest.matchers.should.Matchers.{convertToAnyShouldWrapper, equal}
+import testsets.SpiralData
 
 class CategoricalCrossEntropyLossUnitTest extends AnyFunSuite {
     test("CategoricalCrossEntropyLoss happy path") {
@@ -32,9 +33,12 @@ class CategoricalCrossEntropyLossUnitTest extends AnyFunSuite {
         val firstActivation = ReLU.forward(firstPass)
         val secondPass = dense2.forward(firstActivation)
         val secondActivation = Softmax.forward(secondPass)
-        println(secondActivation)
         val expectedLoss = 1.09861
         val testLoss = CategoricalCrossEntropyLoss.forward(secondActivation, classLabels)
-        testLoss should equal (expectedLoss +- 0.00001)
+        testLoss should equal (expectedLoss +- 0.0001)
+        val testAccuracy = Accuracy.calculate(secondActivation, classLabels)
+        println("Tested accuracy = " + testAccuracy)
+        testAccuracy should be > 0.0
+        testAccuracy should be < 1.0
     }
 }
