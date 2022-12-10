@@ -1,7 +1,7 @@
 package testsets
 
 import layers.Matrix
-import numscala.Numscala.linspace
+import numscala.Numscala.{linspace, zipWith}
 
 import scala.collection.mutable.ListBuffer
 import scala.math.{cos, sin}
@@ -37,13 +37,5 @@ object SpiralData {
                 }
         }
         (Matrix.apply(oneListPerClass.fold(Nil)((x, y) => x ++ y)), classLabels.toList)
-    }
-
-    // How does Scala not have zipWith function?
-    def zipWith(a: List[Double], b: List[Double], function: (Double, Double) => Double): List[Double] = {
-        (a, b) match {
-            case (Nil, _) | (_, Nil) => Nil
-            case (x :: xs, y :: ys) => function(x, y) :: zipWith(xs, ys, function)
-        }
     }
 }

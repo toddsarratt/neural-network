@@ -2,6 +2,7 @@ package testsets
 
 import layers.Matrix
 
+import scala.collection.mutable.ListBuffer
 import scala.util.Random.nextGaussian
 
 // Recreates `from nnfs.datasets import vertical_data`
@@ -21,30 +22,18 @@ import scala.util.Random.nextGaussian
 //         y[ix] = class_number
 //     return X, y
 
-// OpenAI says:
-// def createData(100: Int, 3: Int): (Array[Array[Double]], Array[Int]) = {
-//    val X = Array.ofDim[Double](100 * 3, 2)
-//    val y = Array.ofDim[Int](100 * 3)
-//    for (classNumber <- 0 until classes) {
-//      val ix = (samples * classNumber) until (samples * (classNumber + 1))
-//      X(ix) = Array.tabulate(samples)(i => (scala.util.Random.nextGaussian() * 0.1) + (classNumber) / 3)    <= Doesn't compile
-//        .zip(Array.tabulate(samples)(i => scala.util.Random.nextGaussian() * 0.1 + 0.5))
-//      y(ix) = Array.fill(samples)(classNumber)                                                              <= Doesn't compile
-//    }
-//    (X, y)
-//  }
 
 object VerticalData {
 
     def createData(samples: Int, classes: Int): (Matrix, List[Int]) = {
-        val classLabels = 0 until classes
-        val coordinatesPerClass = classLabels.collect { classNumber =>
-            val xCoordinates = List.fill(samples)((nextGaussian() * 0.1) + classNumber / 3)
+        val classLabels = new ListBuffer[Int]()
+        val coordinatesPerClass = for (classIndex <- 0 until classes) yield {
+            val xCoordinates = List.fill(samples)((nextGaussian() * 0.1) + classIndex / 3)
             val yCoordinates = List.fill(samples)(nextGaussian() * 0.1 + 0.5)
-            val dataRow = xCoordinates.zip(yCoordinates).collect {
-                case (x, y) => List(x,y)
+            for ((x, y) <- xCoordinates.zip(yCoordinates)) yield {
+                classLabels += classIndex
+                List(x, y)
             }
-            dataRow
         }
         (Matrix.apply(coordinatesPerClass.fold(Nil)((x, y) => x ++ y)), classLabels.toList)
     }
